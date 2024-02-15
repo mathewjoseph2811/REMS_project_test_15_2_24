@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %}
+{% block content %}
+{% load static %}
+
+
+
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+<script>
+    $( function() {
+        $( "#datepicker1" ).datepicker();
+    } );
+</script>
+<script>
+    $( function() {
+        $( "#datepicker2" ).datepicker();
+    } );
+</script>
+<script>
+    function closeErrorMessage() {
+        document.getElementById('error-message').style.display = 'none';
+    }
+</script>
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+                <h1 class="page-title">Add Tenant</h1>
+                <!-- <a href="/short_course" class="btn btn-danger btn-pill">View</a> -->
+
+            </div>
+            <!-- PAGE-HEADER END -->
+
+
+
+            <form  action="add_tenant" method="post" class="" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                   
+
+                    <!-- DETAILS START -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Tenant Details</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    {% if error_message %}
+                                    <div class="error-message" id="error-message">
+                                        <span class="close" onclick="closeErrorMessage()" >&times;</span>
+                                        <span style="display: flex;justify-content: center;"><span class="text-danger">{{ error_message }}</span></span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="row">
+
+                                    <!--  Title -->
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label"> Name<span class="text-danger">*</span>:</label>
+                                            <input type="text" class="form-control" placeholder=" Name" name="str_name" required>
+                                        </div>
+                                    </div>
+                                    <!--  Subtitle -->
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Address<span class="text-danger">*</span>:</label>
+                                            <input type="text" class="form-control" placeholder="Address" name="str_address" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Unit Type</label>
+                                            <select class="form-control select2" data-placeholder="Status" name="int_unit_id" required>
+                                                {% for itr_units in lst_units %}
+                                                    <option value="{{ itr_units.pk_bint_id }}">{{ itr_units.fk_property_id__vchr_name }} - {{itr_units.fk_unit_types_id__vchr_name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label">Rental Date</label>
+                                            <input type="text" class="form-control" id="datepicker1"  name="dat_rent" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label">Agreement End Date</label>
+                                            <input type="text" class="form-control" id="datepicker2"  name="dat_end" required>
+                                        </div>
+                                    </div>
+                                     <!-- IMAGE UPLOADER -->
+                                    <div class=" col-md-6">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Image Upload</h3>
+                                            </div>
+                                            <div class=" card-body">
+                                                <div class="row mb-5">
+                                                    <div class="col-lg-12 col-sm-12 mb-4 mb-lg-0">
+                                                        <input type="file" required class="dropify" data-bs-height="180" name="image"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- IMAGE UPLOADER end -->
+                                  
+
+                                    <div class="form-group">
+
+
+<div class="multi-field-wrapper ">
+  <div class="multi-fields">
+    <div class="multi-field">
+      <div class="row">
+      <!-- <div class="col-lg-6" style="padding-right:0px">
+          <div class="form-group">
+            <label>Amount</label>
+            <input type="number" class="form-control form-control-lg" placeholder="Value" name="amount">
+          </div>
+        </div> -->
+
+        <!-- <div class="col-lg-6" style="padding-right:0px">
+          <div class="form-group">
+            <label>Aditional Information</label>
+          
+            <textarea class="form-control mb-4" placeholder="Textarea"  name="additional_information" ></textarea>
+          </div>
+        </div> -->
+
+      </div>
+      <!-- <button type="button"
+        class="remove-field float-right btn btn-danger btn-sm icon-btn ml-2 "><i
+          class="mdi mdi-delete"></i></button> -->
+    </div>
+  </div>
+  <div>
+    <!-- <button type="button" type="button"
+      class=" add-field btn btn-info btn-sm icon-btn ml-2 mb-2">
+      Add New<i class="mdi mdi-plus"></i>
+    </button> -->
+  </div>
+</div>
+
+</div>
+
+                                   
+
+                                    
+                                    <div class="col-lg-12 ">
+                                        <div class="mt-5">
+                                            <a href="" class="btn btn-default btn-pill">Cancel</a>
+                                            <button type="submit" class="btn btn-warning btn-pill">Submit</button>
+                                        </div>
+                                    </div>
+                                     <!-- SUBMIT END -->
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- DETAILS END -->
+
+
+                </div>
+
+        </div>
+        </form>
+
+
+    </div>
+    <!-- CONTAINER END -->
+</div>
+</div>
+<!--app-content close-->
+
+
+<script>
+    $('.multi-field-wrapper').each(function () {
+      var $wrapper = $('.multi-fields', this);
+      $(".add-field", $(this)).click(function (e) {
+        $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input,textarea').val('')
+          .focus();
+      });
+      $('.multi-field .remove-field', $wrapper).click(function () {
+        if ($('.multi-field', $wrapper).length > 1)
+          $(this).parent('.multi-field').remove();
+      });
+    });
+  </script>
+    {% endblock %}

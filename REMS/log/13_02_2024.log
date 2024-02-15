@@ -1,0 +1,2 @@
+2024-02-13 17:33:58,332 - /home/mathew/prjt_13_2_24/Short_term_course-main1/Short_term_course-main/REMS/property/views.py - 85 - views - get - ERROR - name 'lst_tenant' is not defined - user_id:2 - line no: 82
+2024-02-13 17:34:58,368 - /home/mathew/prjt_13_2_24/Short_term_course-main1/Short_term_course-main/REMS/property/views.py - 85 - views - get - ERROR - name 'lst_tenant' is not defined - user_id:2 - line no: 82

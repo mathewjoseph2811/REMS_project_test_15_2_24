@@ -1,0 +1,5 @@
+2024-02-14 06:48:54,575 - /home/vijay/mathew/tes_12_2_24/tst_14_2_24/REMS/property/views.py - 88 - views - post - ERROR -  - user_id:2 - line no: 59
+2024-02-14 06:48:57,342 - /home/vijay/mathew/tes_12_2_24/tst_14_2_24/REMS/property/views.py - 88 - views - post - ERROR -  - user_id:2 - line no: 48
+2024-02-14 06:49:06,722 - /home/vijay/mathew/tes_12_2_24/tst_14_2_24/REMS/property/views.py - 88 - views - post - ERROR -  - user_id:2 - line no: 48
+2024-02-14 09:40:32,627 - /home/vijay/mathew/tes_12_2_24/tst_14_2_24/REMS/tenant_system/views.py - 53 - views - post - ERROR - name 'Response' is not defined - user_id:2 - line no: 53
+2024-02-14 09:59:52,584 - /home/vijay/mathew/tes_12_2_24/tst_14_2_24/REMS/tenant_system/views.py - 102 - views - post - ERROR - ['“02/29/2024” value has an invalid date format. It must be in YYYY-MM-DD format.'] - user_id:2 - line no: 91
