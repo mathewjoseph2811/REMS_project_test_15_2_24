@@ -20,8 +20,8 @@ class PropertyList(APIView):
             
             paginator = Paginator(ins_property, 4)  # Display 4 records per page
             page_number = request.GET.get('page')
-            lst_courses = paginator.get_page(page_number)
-            return render(request, "add_property.html", {'data':lst_courses})
+            lst_property = paginator.get_page(page_number)
+            return render(request, "add_property.html", {'data':lst_property})
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             ins_logger.logger.error(e,extra={'details':'line no: ' + str(exc_tb.tb_lineno),'user': 'user_id:' + str(request.user.id)})

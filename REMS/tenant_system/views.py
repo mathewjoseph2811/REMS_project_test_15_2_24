@@ -13,7 +13,7 @@ import json
 import uuid
 from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator
-
+from django.db.models import Q
 
 class TenantList(APIView):
     def get(self,request):
@@ -36,7 +36,7 @@ class TenantList(APIView):
             paginator = Paginator(lst_tenant, 4)  # Display 2 records per page
             page_number = request.GET.get('page')
             lst_tent = paginator.get_page(page_number)
-            # return Response({'status':1,'data':lst_tenant})
+
             return render(request, "add_tenant.html", {'data':lst_tent})
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -146,3 +146,39 @@ class ViewTenant(APIView):
             exc_type, exc_obj, exc_tb = sys.exc_info()
             ins_logger.logger.error(e,extra={'details':'line no: ' + str(exc_tb.tb_lineno),'user': 'user_id:' + str(request.user.id)})
             return render(request, "view_tenant.html", {'error_message':'Oops! Something Went Wrong'})
+        
+
+class SearchList(APIView):
+    def get(self,request):
+
+        try:
+
+            return render(request, "search.html", {})
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            ins_logger.logger.error(e,extra={'details':'line no: ' + str(exc_tb.tb_lineno),'user': 'user_id:' + str(request.user.id)})
+            return render(request, "search.html", {'error_message':'Oops! Something Went Wrong'})
+        
+
+    def post(self,request):
+
+        try:
+            str_term = request.data.get('str_search')
+
+            ins_units = PropertyUnitDetails.objects.filter(Q(fk_tenant_id__vchr_name__icontains = str_term) | Q(fk_tenant_id__vchr_address__icontains = str_term) | Q(fk_property_id__vchr_name__icontains = str_term) | Q(fk_unit_types_id__vchr_name__icontains = str_term)).values('fk_property_id','dbl_rent','fk_unit_types_id','fk_unit_types_id__vchr_name','fk_tenant_id','dat_agreement_end','dat_rent_payout','fk_property_id__vchr_name','fk_tenant_id__vchr_name','fk_tenant_id__vchr_address')
+
+            paginator1 = Paginator(ins_units, 4)  # Display 2 records per page
+            page_number1 = request.GET.get('page')
+            lst_tent = paginator1.get_page(page_number1)
+
+
+            ins_property = PropertyUnitDetails.objects.filter(Q(fk_property_id__vchr_name__icontains = str_term) | Q(fk_property_id__vchr_address__icontains = str_term) | Q(fk_property_id__vchr_location__icontains = str_term)  | Q(fk_property_id__txt_features__icontains = str_term) | Q(fk_unit_types_id__vchr_name__icontains = str_term)).values('fk_property_id','fk_unit_types_id','fk_property_id__vchr_name','fk_property_id__vchr_address','fk_property_id__vchr_location','fk_property_id__txt_features','fk_unit_types_id__vchr_name')
+            
+            paginator2 = Paginator(ins_property, 4)  # Display 4 records per page
+            page_number2 = request.GET.get('page')
+            lst_property = paginator2.get_page(page_number2)
+            return render(request, "search.html", {'lst_tent':lst_tent,'lst_property':lst_property})
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            ins_logger.logger.error(e,extra={'details':'line no: ' + str(exc_tb.tb_lineno),'user': 'user_id:' + str(request.user.id)})
+            return render(request, "search.html", {'error_message':'Oops! Something Went Wrong'})
